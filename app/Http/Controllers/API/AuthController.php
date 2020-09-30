@@ -64,7 +64,21 @@ class AuthController extends Controller
                 $json['email'] = $resultUser->email;
                 $json['username'] = $resultUser->username;
                 return $response->setContent(json_encode($json));
+            }else{
+                  #Password incorrect#
+                  return response()->json([
+                    "status" => 401,
+                    "error" => "invalid_credentials",
+                    "message" => "Password salah. Isi dengan data yang benar dan coba lagi"
+                ]);
             }
+        }else{
+             // Username Not Exist
+             return response()->json([
+                "status" => 401,
+                "error" => "invalid_credentials",
+                "message" => "Username tidak terdaftar, Isi dengan data yang benar dan coba lagi"
+             ]);
         }
     }
 }
