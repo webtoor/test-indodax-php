@@ -13,7 +13,7 @@ class TransactionController extends Controller
     public function findHistory(){
         try {
             $accessToken = Auth::user()->token();
-            $transaction = Transaction::where("sender", $accessToken->user_id)->orderBy("transaction_id", "desc")->get();
+            $transaction = Transaction::with("sender", "receiver")->where("sender", $accessToken->user_id)->orWhere("receiver", $accessToken->user_id)->orderBy("transaction_id", "desc")->get();
             return response()->json([
                 'status' => 200,
                 'data' => $transaction

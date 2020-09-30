@@ -12,4 +12,11 @@ class Transaction extends Model
     ];
     public $timestamps = true;
 
+    public function sender(){
+        return $this->belongsTo('App\Models\User', 'sender', 'user_id');
+    }
+
+    public function receiver(){
+        return $this->belongsTo('App\Models\User', 'receiver', 'user_id');
+    }
 }

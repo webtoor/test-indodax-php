@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
                     'status' => 422,
                     'message' => $exception->getMessage(),
                     'errors' => $exception->validator->errors()
-                ],422);
+                ]);
             }
         }
 

@@ -12,7 +12,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "laravel/passport": "^8.3"
+        "laravel/passport": "^8.3",
+        "barryvdh/laravel-cors": "^0.11.4"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
