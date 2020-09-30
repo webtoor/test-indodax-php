@@ -1,9 +1,43 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar style="margin-top:0px;" class="ion-text-center">
+    <ion-button slot="start" fill="clear" color="primary" (click)="signinPage()">
+      <ion-icon slot="start" color="danger" name="arrow-back-circle-outline"></ion-icon>
+           LOGIN DISINI
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
 
-</ion-content>
+  <ion-item class="marginTop">
+    <ion-label position="stacked">Username</ion-label>
+    <ion-input type="text" placeholder="Masukan Username" formControlName="username"></ion-input>
+  </ion-item>
+  <div *ngIf="submitted && f.username.errors" class="invalid-feedback" style="margin-top:-10px;">
+    <div *ngIf="f.username.errors.required">Username harus diisi guys :(</div>
+  </div>
+
+  <ion-item class="marginTop">
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input type="email" placeholder="Masukan Email" formControlName="email"></ion-input>
+  </ion-item>
+  <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="margin-top:-10px;">
+    <div *ngIf="f.email.errors.required">Email harus diisi guys :(</div>
+    <div *ngIf="f.email.errors.email">Format email tidak valid</div> 
+  </div>
+
+  <ion-item class="marginTop">
+    <ion-label position="stacked">Password</ion-label>
+    <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Masukan Password" formControlName="password"></ion-input>
+    <ion-icon slot="end" [name]="passwordToggleIcon" style="margin-top: 25px;" (click)="togglePassword()"></ion-icon>
+  </ion-item>
+  <div *ngIf="submitted && f.password.errors" class="invalid-feedback" style="margin-top:-10px;">
+    <div *ngIf="f.password.errors.required">Password harus diisi guys :(</div>
+  </div>
+
+  <div class="ion-text-center" style="margin-top:40px">
+    <ion-button [disabled]="signUpForm.invalid" expand="block" type="submit" style="height:40px" >Daftar</ion-button>
+  </div>
+  </form>
+  </ion-content>

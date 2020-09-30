@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -12,7 +13,7 @@ export class SigninPage implements OnInit {
   submitted = false;
   showPassword = false;
   passwordToggleIcon = "eye"; 
-  constructor(public toastController: ToastController, public menu: MenuController, private formBuilder: FormBuilder) { 
+  constructor(public toastController: ToastController, public menu: MenuController, private formBuilder: FormBuilder, public router : Router) { 
     this.menu.enable(false);
   }
 
@@ -45,6 +46,10 @@ export class SigninPage implements OnInit {
   }
 
   get f() { return this.signInForm.controls; }
+
+  signupPage(){
+    this.router.navigate(['/signup'])
+  }
   togglePassword(){
     this.showPassword = !this.showPassword
     if(this.passwordToggleIcon == "eye"){
