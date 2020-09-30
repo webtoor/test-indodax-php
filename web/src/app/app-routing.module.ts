@@ -9,10 +9,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },
-  {
     path: 'signin',
     loadChildren: () => import('./pages/signin/signin.module').then( m => m.SigninPageModule)
   },
@@ -28,6 +24,10 @@ const routes: Routes = [
   {
     path: 'transaction',
     loadChildren: () => import('./pages/transaction/transaction.module').then( m => m.TransactionPageModule)
+  },
+  {
+    path: 'create-transaction',
+    loadChildren: () => import('./pages/create-transaction/create-transaction.module').then( m => m.CreateTransactionPageModule)
   }
 ];
 

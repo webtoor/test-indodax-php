@@ -20,7 +20,12 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'History',
+      title: 'Transfer',
+      url: '/create-transaction',
+      icon: 'paper-plane'
+    },  
+    {
+      title: 'History Transaksi',
       url: '/transaction',
       icon: 'mail'
     }
