@@ -20,5 +20,7 @@ Route::post('/signin', 'API\AuthController@signIn');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/user', 'API\UserController@find');
+    Route::get('/transaction', 'API\TransactionController@findHistory');
+    Route::post('/transaction', 'API\TransactionController@create');
 
 });
