@@ -4,6 +4,8 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
+  --ion-font-family: 'Raleway-Medium';
+
   --ion-color-primary: #17a9d0;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
@@ -229,4 +231,10 @@
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+@font-face {
+  font-family: 'Raleway-Medium';
+  src: url('../assets/fonts/Raleway-Medium.ttf');
+
 }
