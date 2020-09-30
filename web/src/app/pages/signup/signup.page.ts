@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { NavigationExtras, Router } from '@angular/router';
+import { MenuController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class SignupPage implements OnInit {
   submitted = false;
   showPassword = false;
   passwordToggleIcon = "eye";
-  constructor(private formBuilder: FormBuilder, public menu: MenuController, public router : Router, public authService : AuthService) {
+  constructor(private formBuilder: FormBuilder, public menu: MenuController, public router : Router, public authService : AuthService, public toastController: ToastController) {
     this.menu.enable(false);
   }
 
@@ -27,6 +27,14 @@ export class SignupPage implements OnInit {
     });
   }
 
+  ionViewWillEnter(){
+    this.menu.enable(false);
+    const check = JSON.parse(localStorage.getItem('indodax-laravel'));
+    if(check){
+      this.router.navigate(["/dashboard"])
+    }
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.signUpForm.invalid) {
@@ -37,11 +45,26 @@ export class SignupPage implements OnInit {
     })
     
     console.log(this.signUpForm.value)
+   
     this.authService.PostSignUp(this.signUpForm.value, 'signup').subscribe(res => {
       console.log(res)
       if(res.status == 201) {
-        
-      }else if(res.error){
+        this.submitted = false;
+        this.signUpForm.reset()
+        let navigationExtras: NavigationExtras = {
+          replaceUrl: true,
+          state: {
+            registerStatus : 1
+          }
+        };
+        this.router.navigate(['/signin'], navigationExtras);
+      }else if(res.errors){
+          var pes = "";
+          for(var obj in res.errors) { 
+            pes += res.errors[obj].toString() + "\n";
+            //console.log(res.errors[obj].toString())
+         }
+          this.presentToast(pes.toString(), "bottom")
       }
     });
   }
@@ -50,6 +73,15 @@ export class SignupPage implements OnInit {
 
   signinPage(){
     this.router.navigate(['/signin'])
+  }
+
+  async presentToast(msg, position) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      position: position
+    });
+    toast.present();
   }
 
   togglePassword(){

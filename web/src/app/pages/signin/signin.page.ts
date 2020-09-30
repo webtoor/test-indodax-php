@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -13,7 +14,8 @@ export class SigninPage implements OnInit {
   submitted = false;
   showPassword = false;
   passwordToggleIcon = "eye"; 
-  constructor(public toastController: ToastController, public menu: MenuController, private formBuilder: FormBuilder, public router : Router) { 
+  registerStatus = 0;
+  constructor(public route : ActivatedRoute, public toastController: ToastController, public menu: MenuController, private formBuilder: FormBuilder, public router : Router, public authService : AuthService) { 
     this.menu.enable(false);
   }
 
@@ -21,7 +23,23 @@ export class SigninPage implements OnInit {
     this.signInForm = this.formBuilder.group({
       'username' : [null, [Validators.required]],
       'password' : [null, Validators.required],
-    });  
+    }); 
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.registerStatus = this.router.getCurrentNavigation().extras.state.registerStatus;
+        if(this.registerStatus === 1){
+          this.presentToast('Terima kasih, Anda berhasil daftar, Silakan login', "bottom", 5000);
+        }
+      }
+    });
+  }
+
+  ionViewWillEnter(){
+    this.menu.enable(false);
+    const check = JSON.parse(localStorage.getItem('indodax-laravel'));
+    if(check){
+      this.router.navigate(["/dashboard"])
+    }
   }
 
   onSubmit() {
@@ -30,19 +48,15 @@ export class SigninPage implements OnInit {
         return;
     }
     console.log(this.signInForm.value)
-   /*  this.loading.present();
     this.authService.PostSignIn(this.signInForm.value, 'signin').subscribe(res => {
-      //console.log(res)
+      console.log(res)
       if(res.access_token) {
-        localStorage.setItem('vuenic-pwa', JSON.stringify(res));
-        this.events.publish('email', res.email);
-        this.router.navigate(['/tabs/dashboard'], {replaceUrl: true});
-        this.loading.dismiss();
-      }else if(res.error){
-        this.presentToast('Anda memasukkan Email dan Password yang salah. Isi dengan data yang benar dan coba lagi',);
-        this.loading.dismiss();
+        localStorage.setItem('indodax-laravel', JSON.stringify(res));
+        this.router.navigate(['/dashboard'], {replaceUrl: true});
+      }else if(res.status === 401){
+        this.presentToast(res.message, "bottom", 3000);
       }
-    }); */
+    });
   }
 
   get f() { return this.signInForm.controls; }
@@ -50,6 +64,16 @@ export class SigninPage implements OnInit {
   signupPage(){
     this.router.navigate(['/signup'])
   }
+
+  async presentToast(msg, position, duration) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: duration,
+      position: position
+    });
+    toast.present();
+  }
+
   togglePassword(){
     this.showPassword = !this.showPassword
     if(this.passwordToggleIcon == "eye"){
