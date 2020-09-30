@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule),
     canActivate : [AuthGuardService]
+  },
+  {
+    path: 'transaction',
+    loadChildren: () => import('./pages/transaction/transaction.module').then( m => m.TransactionPageModule)
   }
 ];
 

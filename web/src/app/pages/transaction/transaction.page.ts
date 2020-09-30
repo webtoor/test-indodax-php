@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: 'app-transaction',
+  templateUrl: './transaction.page.html',
+  styleUrls: ['./transaction.page.scss'],
 })
-export class DashboardPage implements OnInit {
-  userData;
+export class TransactionPage implements OnInit {
   transaction;
   user_id;
   constructor(public httpService: AuthService) { 
@@ -17,17 +16,10 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getUser();
-    this.getTransaction()
   }
 
-  getUser(){
-    this.httpService.GetRequest('user').subscribe(res => {
-      console.log(res);
-      if(res.status == 200){
-        this.userData = res.data
-      }
-    });
+  ionViewWillEnter(){
+    this.getTransaction()
   }
 
   getTransaction(){
@@ -38,4 +30,5 @@ export class DashboardPage implements OnInit {
       }
     });
   }
+
 }

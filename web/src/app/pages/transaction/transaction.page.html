@@ -1,21 +1,9 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="primary" style="height: 130px;">
-    <ion-title class="ion-text-center" style="margin-right: 40px;">Dashboard</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button>
-        <ion-icon name="apps"></ion-icon> 
-      </ion-menu-button>
+      <ion-back-button defaultHref="/dashboard" routerDirection="back" icon="chevron-back-outline"></ion-back-button>
     </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar color="x" style="margin-top:-80px;">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle>
-          <ion-badge color="primary"><b>Saldo Anda</b></ion-badge>
-          <div style="float: right; margin-top: 0px; margin-right: 0px">{{userData?.saldo}} BTC</div>  
-        </ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
+    <ion-title>History Transaksi</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -42,9 +30,4 @@
     </ion-card-content>
   </ion-card>
  </div>
- <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button color="danger">
-    <ion-icon name="add-outline"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
 </ion-content>
