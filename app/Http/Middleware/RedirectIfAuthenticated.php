@@ -23,4 +23,15 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {  
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthorized'
+            ]);
+        }
+        return redirect()->guest(route('login'));
+    }
 }
