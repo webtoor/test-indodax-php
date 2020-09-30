@@ -7,6 +7,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
 
-</ion-content>
+  <ion-item class="marginTop">
+    <ion-label position="stacked">Username Penerima</ion-label>
+    <ion-input type="text" placeholder="Masukan Username Penerima" formControlName="receiver"></ion-input>
+  </ion-item>
+  <div *ngIf="submitted && f.receiver.errors" class="invalid-feedback" style="margin-top:-10px;">
+    <div *ngIf="f.receiver.errors.required">Username Penerima harus diisi guys :(</div>
+  </div>
+
+  <ion-item class="marginTop">
+    <ion-label position="stacked">Jumlah BTC</ion-label>
+    <ion-input type="number" placeholder="Masukan Jumlah BTC" formControlName="amount"></ion-input>
+  </ion-item>
+  <div *ngIf="submitted && f.amount.errors" class="invalid-feedback" style="margin-top:-10px;">
+    <div *ngIf="f.amount.errors.required">Jumlah BTC harus diisi guys :(</div>
+  </div>
+
+  <div class="ion-text-center" style="margin-top:40px">
+    <ion-button expand="block" type="submit" style="height:40px" >Submit</ion-button>
+  </div>
+  </form>
+  </ion-content>

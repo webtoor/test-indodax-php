@@ -12,7 +12,6 @@ export class TransactionPage implements OnInit {
   constructor(public httpService: AuthService) { 
     const userData = JSON.parse(localStorage.getItem('indodax-laravel'));
     this.user_id = userData["user_id"]
-    console.log(this.user_id)
   }
 
   ngOnInit() {

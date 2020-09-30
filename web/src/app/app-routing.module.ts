@@ -5,7 +5,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'signin',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -23,11 +23,13 @@ const routes: Routes = [
   },
   {
     path: 'transaction',
-    loadChildren: () => import('./pages/transaction/transaction.module').then( m => m.TransactionPageModule)
+    loadChildren: () => import('./pages/transaction/transaction.module').then( m => m.TransactionPageModule),
+    canActivate : [AuthGuardService]
   },
   {
     path: 'create-transaction',
-    loadChildren: () => import('./pages/create-transaction/create-transaction.module').then( m => m.CreateTransactionPageModule)
+    loadChildren: () => import('./pages/create-transaction/create-transaction.module').then( m => m.CreateTransactionPageModule),
+    canActivate : [AuthGuardService]
   }
 ];
 

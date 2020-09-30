@@ -3,6 +3,7 @@ import { MenuController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventsService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-signin',
@@ -15,7 +16,7 @@ export class SigninPage implements OnInit {
   showPassword = false;
   passwordToggleIcon = "eye"; 
   registerStatus = 0;
-  constructor(public route : ActivatedRoute, public toastController: ToastController, public menu: MenuController, private formBuilder: FormBuilder, public router : Router, public authService : AuthService) { 
+  constructor( public events: EventsService, public route : ActivatedRoute, public toastController: ToastController, public menu: MenuController, private formBuilder: FormBuilder, public router : Router, public authService : AuthService) { 
     this.menu.enable(false);
   }
 
@@ -32,6 +33,9 @@ export class SigninPage implements OnInit {
         }
       }
     });
+  }
+  ionViewWillLeave(){
+    this.registerStatus = 0;
   }
 
   ionViewWillEnter(){
@@ -52,6 +56,9 @@ export class SigninPage implements OnInit {
       console.log(res)
       if(res.access_token) {
         localStorage.setItem('indodax-laravel', JSON.stringify(res));
+        this.events.publish('email', res.email);
+        this.events.publish('username', res.username);
+
         this.router.navigate(['/dashboard'], {replaceUrl: true});
       }else if(res.status === 401){
         this.presentToast(res.message, "bottom", 3000);
