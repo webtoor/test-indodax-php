@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-about',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.page.scss'],
 })
 export class AboutPage implements OnInit {
-
-  constructor() { }
+  userData
+  constructor(public menu: MenuController) { 
+  }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    this.userData = JSON.parse(localStorage.getItem('indodax-laravel'));
+    console.log(this.userData)
+    if(this.userData == null){
+      this.menu.enable(false);
+
+    }else{
+      this.menu.enable(true);
+    }
+    
   }
 
 }
