@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'create-transaction',
     loadChildren: () => import('./pages/create-transaction/create-transaction.module').then( m => m.CreateTransactionPageModule),
     canActivate : [AuthGuardService]
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
   }
 ];
 

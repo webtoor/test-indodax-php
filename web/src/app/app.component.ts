@@ -28,6 +28,11 @@ export class AppComponent implements OnInit {
       title: 'History Transaksi',
       url: '/transaction',
       icon: 'mail'
+    },
+    {
+      title: 'Tentang Apps',
+      url: '/about',
+      icon: 'information-circle'
     }
   ];
 
