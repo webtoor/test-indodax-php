@@ -11,7 +11,7 @@
   <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
 
   <ion-item class="marginTop">
-    <ion-label position="stacked">Username</ion-label>
+    <ion-label position="stacked">Username<ion-text color="danger">*</ion-text></ion-label>
     <ion-input type="text" placeholder="Masukan Username" formControlName="username"></ion-input>
   </ion-item>
   <div *ngIf="submitted && f.username.errors" class="invalid-feedback" style="margin-top:-10px;">
@@ -19,7 +19,7 @@
   </div>
 
   <ion-item class="marginTop">
-    <ion-label position="stacked">Email</ion-label>
+    <ion-label position="stacked">Email<ion-text color="danger">*</ion-text></ion-label>
     <ion-input type="email" placeholder="Masukan Email" formControlName="email"></ion-input>
   </ion-item>
   <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="margin-top:-10px;">
@@ -28,7 +28,7 @@
   </div>
 
   <ion-item class="marginTop">
-    <ion-label position="stacked">Password</ion-label>
+    <ion-label position="stacked">Password<ion-text color="danger">*</ion-text></ion-label>
     <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Masukan Password" formControlName="password"></ion-input>
     <ion-icon slot="end" [name]="passwordToggleIcon" style="margin-top: 25px;" (click)="togglePassword()"></ion-icon>
   </ion-item>
