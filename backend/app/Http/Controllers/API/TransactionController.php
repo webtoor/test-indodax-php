@@ -37,6 +37,7 @@ class TransactionController extends Controller
             $receiver = User::where("username", $validateData["receiver"])->first();
             if($receiver){
             if($sender->saldo >= $validateData["amount"]){
+
                 $transaction = Transaction::create([
                     "sender" => $accessToken->user_id,
                     "receiver" => $receiver->user_id,
@@ -50,8 +51,8 @@ class TransactionController extends Controller
                 ]);
 
                 // Saldo Receiver
-                $saldo_receiver = $sender->saldo + $validateData["amount"];
-                $receiverSaldo = User::where("user_id", $receiver->user_id,)->update([
+                $saldo_receiver = $receiver->saldo + $validateData["amount"];
+                $receiverSaldo = User::where("user_id", $receiver->user_id)->update([
                     "saldo" => $saldo_receiver
                 ]);
 
