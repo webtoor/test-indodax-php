@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+    console.log('PHP Backend deploying in https://dev.api-pis.eidaramata.com')
   }
 
   async logout(){
