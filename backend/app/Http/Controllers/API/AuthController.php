@@ -50,8 +50,8 @@ class AuthController extends Controller
             if (Hash::check($validatedData['password'], $resultUser->password)) {
                 $request->request->add([
                     "grant_type" => "password",
-                    "client_id" => "3",
-                    "client_secret" => "tyr3PagBXjolRIahvZagAfPm6mREGfqjQKf0EEfV",
+                    "client_id" => "1",
+                    "client_secret" => "umw7JW3DnIrqOgg963mCwCKpOFsFkziJQBmA2MYS",
                     "username"  => $resultUser->email,
                     "password"  => $validatedData['password'],
                     "scope"     => "*"

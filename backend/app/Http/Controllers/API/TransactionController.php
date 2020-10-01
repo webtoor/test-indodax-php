@@ -35,6 +35,7 @@ class TransactionController extends Controller
             $accessToken = Auth::user()->token();
             $sender = User::where("user_id", $accessToken->user_id)->first();
             $receiver = User::where("username", $validateData["receiver"])->first();
+            if($receiver){
             if($sender->saldo >= $validateData["amount"]){
                 $transaction = Transaction::create([
                     "sender" => $accessToken->user_id,
@@ -55,14 +56,21 @@ class TransactionController extends Controller
                 ]);
 
                 return response()->json([
-                    'status' => 200,
+                    'status' => 201,
                     'data' => $transaction
                 ]);
             }else{
                 return response()->json([
                     'status' => 422,
-                    'message' => 'Saldo Anda tidak cukup',
-                    'error' => 'Saldo Anda tidak cukup'
+                    'message' => 'Saldo Anda tidak cukup, Isi dengan data yang benar dan coba lagi',
+                    'error' => 'Saldo Anda tidak cukup, Isi dengan data yang benar dan coba lagi'
+                ]);
+            }
+            }else{
+                return response()->json([
+                    'status' => 422,
+                    'message' => 'Username Penerima Tidak Ditemukan, Isi dengan data yang benar dan coba lagi',
+                    'error' => 'Username Penerima Tidak Ditemukan, Isi dengan data yang benar dan coba lagi',
                 ]);
             }
         } catch (\Exception $e) {
