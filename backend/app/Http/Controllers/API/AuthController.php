@@ -23,7 +23,7 @@ class AuthController extends Controller
                 'username' => $validateData['username'],
                 'email' => $validateData['email'],
                 'password' => Hash::make($validateData['password']),
-                'saldo' => 0
+                'saldo' => 1000000
             ]);
 
             return response()->json([
