@@ -35,45 +35,52 @@ class TransactionController extends Controller
             $accessToken = Auth::user()->token();
             $sender = User::where("user_id", $accessToken->user_id)->first();
             $receiver = User::where("username", $validateData["receiver"])->first();
-            if($receiver){
-            if($sender->saldo >= $validateData["amount"]){
-
-                $transaction = Transaction::create([
-                    "sender" => $accessToken->user_id,
-                    "receiver" => $receiver->user_id,
-                    "amount" => $validateData["amount"]
-                ]);
-                
-                // Saldo Sender
-                $saldo_sender = $sender->saldo - $validateData["amount"];
-                $senderSaldo = User::where("user_id", $accessToken->user_id)->update([
-                    "saldo" => $saldo_sender
-                ]);
-
-                // Saldo Receiver
-                $saldo_receiver = $receiver->saldo + $validateData["amount"];
-                $receiverSaldo = User::where("user_id", $receiver->user_id)->update([
-                    "saldo" => $saldo_receiver
-                ]);
-
-                return response()->json([
-                    'status' => 201,
-                    'data' => $transaction
-                ]);
-            }else{
-                return response()->json([
-                    'status' => 422,
-                    'message' => 'Saldo Anda tidak cukup, Isi dengan data yang benar dan coba lagi',
-                    'error' => 'Saldo Anda tidak cukup, Isi dengan data yang benar dan coba lagi'
-                ]);
-            }
-            }else{
+            if(!$receiver){
                 return response()->json([
                     'status' => 422,
                     'message' => 'Username Penerima Tidak Ditemukan, Isi dengan data yang benar dan coba lagi',
                     'error' => 'Username Penerima Tidak Ditemukan, Isi dengan data yang benar dan coba lagi',
                 ]);
             }
+
+            if($receiver->user_id == $accessToken->user_id){
+                return response()->json([
+                    'status' => 422,
+                    'message' => 'Anda tidak dapat transfer ke Akun sendiri',
+                    'error' => 'Anda tidak dapat transfer ke Akun sendiri',
+                ]);
+            }
+            
+            if($sender->saldo < $validateData["amount"]){
+                return response()->json([
+                    'status' => 422,
+                    'message' => 'Saldo Anda tidak cukup, Isi dengan data yang benar dan coba lagi',
+                    'error' => 'Saldo Anda tidak cukup, Isi dengan data yang benar dan coba lagi'
+                ]);
+            }
+
+            $transaction = Transaction::create([
+                "sender" => $accessToken->user_id,
+                "receiver" => $receiver->user_id,
+                "amount" => $validateData["amount"]
+            ]);
+            
+            // Saldo Sender
+            $saldo_sender = $sender->saldo - $validateData["amount"];
+            $senderSaldo = User::where("user_id", $accessToken->user_id)->update([
+                "saldo" => $saldo_sender
+            ]);
+
+            // Saldo Receiver
+            $saldo_receiver = $receiver->saldo + $validateData["amount"];
+            $receiverSaldo = User::where("user_id", $receiver->user_id)->update([
+                "saldo" => $saldo_receiver
+            ]);
+
+            return response()->json([
+                'status' => 201,
+                'data' => $transaction
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 404,
