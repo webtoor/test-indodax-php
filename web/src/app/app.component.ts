@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { EventsService } from 'src/app/services/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { EventsService } from 'src/app/services/event.service';
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   emailShow :string;
+  usernameShow: string;
   public appPages = [
     {
       title: 'Dashboard',
@@ -40,15 +42,23 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public events : EventsService
+    public events : EventsService,
+    public alertController: AlertController,
+    public router : Router,
+
   ) {
     const token = JSON.parse(localStorage.getItem('indodax-laravel'));
     if(token){
       this.emailShow = token.email;
+      this.usernameShow = token.username;
     }
     this.events.subscribe('email', (email) => {
       this.emailShow = email;
-      console.log(this.emailShow);
+      //console.log(this.emailShow);
+    });
+    this.events.subscribe('username', (username) => {
+      this.usernameShow = username;
+      //console.log(this.usernameShow);
     });
     this.initializeApp();
   }
@@ -63,4 +73,28 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   
   }
+
+  async logout(){
+    const alert = await this.alertController.create({
+      header: 'Konfirmasi',
+      message: 'Klik OK untuk Logout?',
+      buttons: [
+        {
+          text: 'CANCEL',
+          handler: () => {
+            
+          }
+        },
+       {
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+            localStorage.clear();
+            this.router.navigate(['/signin'], {replaceUrl: true})
+          }
+        }
+      ]
+    });
+    await alert.present();
+}
 }

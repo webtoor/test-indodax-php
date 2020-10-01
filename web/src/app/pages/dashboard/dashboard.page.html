@@ -20,6 +20,13 @@
 </ion-header>
 
 <ion-content class="ion-padding-top">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="transferPage()">
+    <ion-fab-button color="danger">
+      <ion-icon name="paper-plane-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div *ngIf="transaction?.length > 0; else emptyTransaction">
   <div *ngFor="let item of transaction">
   <ion-card> 
     <ion-item>
@@ -42,9 +49,13 @@
     </ion-card-content>
   </ion-card>
  </div>
- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="transferPage()">
-  <ion-fab-button color="danger">
-    <ion-icon name="paper-plane-outline"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+</div>
+
+<ng-template #emptyTransaction>
+  <div style="text-align: center;">
+    <ion-img src="/assets/images/gologo.png" style="height: 100px; margin-top: 18%;"></ion-img>
+    <h5 style="font-size: 13px; margin-top:15px;"><ion-badge color="danger">Anda Belum Memiliki History Transaksi</ion-badge></h5>
+  </div>
+</ng-template>
+
 </ion-content>

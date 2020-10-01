@@ -3,8 +3,8 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>{{emailShow}}</ion-note>
+          <ion-list-header>{{usernameShow | slice:0:40}}<span *ngIf="usernameShow?.length > 40">...</span></ion-list-header>
+          <ion-note>{{emailShow | slice:0:40}}<span *ngIf="emailShow?.length > 40">...</span></ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="forward" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
@@ -12,6 +12,12 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-item (click)="logout()" lines="none">
+            <ion-icon slot="start" name="log-out" color="dark"></ion-icon>           
+             <ion-label>
+              Logout
+            </ion-label>
+          </ion-item>
         </ion-list>
       </ion-content>
       <ion-footer class="ion-no-border">

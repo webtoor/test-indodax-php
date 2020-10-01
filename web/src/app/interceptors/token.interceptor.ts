@@ -66,7 +66,7 @@ isLoading = false;
             }
         }
         if(error.status === 0){
-            this.presentToast("Maaf. Vuenic sedang dalam pemeliharaan sistem, silakan coba lagi nanti :(");
+            this.presentToast("Maaf. Sedang dalam Pemeliharaan sistem, silakan coba lagi nanti :(");
         }
         //this.hideLoader();
         return throwError(error);

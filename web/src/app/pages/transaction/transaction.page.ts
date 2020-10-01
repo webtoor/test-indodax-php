@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-transaction',
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class TransactionPage implements OnInit {
   transaction;
   user_id;
-  constructor(public httpService: AuthService) { 
+  constructor(public httpService: AuthService, public loading: LoaderService) { 
     const userData = JSON.parse(localStorage.getItem('indodax-laravel'));
     this.user_id = userData["user_id"]
   }
@@ -22,10 +23,12 @@ export class TransactionPage implements OnInit {
   }
 
   getTransaction(){
+    this.loading.present();
     this.httpService.GetRequest('transaction').subscribe(res => {
       console.log(res);
       if(res.status == 200){
         this.transaction = res.data
+        this.loading.dismiss();
       }
     });
   }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-create-transaction',
@@ -13,7 +14,7 @@ export class CreateTransactionPage implements OnInit {
   transactionForm: FormGroup;
   userData;
   submitted = false;
-  constructor(public route : ActivatedRoute, public toastController: ToastController, private formBuilder: FormBuilder, public router : Router, public authService : AuthService) { 
+  constructor(public loading: LoaderService,  public route : ActivatedRoute, public toastController: ToastController, private formBuilder: FormBuilder, public router : Router, public authService : AuthService) { 
     const userData = JSON.parse(localStorage.getItem('indodax-laravel-user'));
     this.userData = userData;
   }
@@ -32,6 +33,7 @@ export class CreateTransactionPage implements OnInit {
         return;
     }
     console.log(this.transactionForm.value)
+    this.loading.present();
     this.authService.PostRequest(this.transactionForm.value, 'transaction').subscribe(res => {
       console.log(res)
       if(res.status === 201) {
@@ -41,8 +43,10 @@ export class CreateTransactionPage implements OnInit {
             refreshPage : 1
           }
         };
+        this.loading.dismiss();
         this.router.navigate(['/dashboard'], navigationExtras);    
         }else if(res.error){
+          this.loading.dismiss();
           this.presentToast(res.error, "bottom", 5000);
       }
     });

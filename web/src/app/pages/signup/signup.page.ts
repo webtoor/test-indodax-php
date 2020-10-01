@@ -75,6 +75,10 @@ export class SignupPage implements OnInit {
     this.router.navigate(['/signin'])
   }
 
+  aboutPage(){
+    this.router.navigate(['/about'])
+  }
+
   async presentToast(msg, position) {
     const toast = await this.toastController.create({
       message: msg,
