@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-list-header>
+    <ion-badge color="yellow-light"><b>Saldo Anda : {{userData?.saldo}} BTC</b></ion-badge>
+  </ion-list-header>
   <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
 
   <ion-item class="marginTop">

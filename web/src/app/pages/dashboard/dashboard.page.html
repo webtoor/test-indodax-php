@@ -27,6 +27,9 @@
   </ion-fab>
 
   <div *ngIf="transaction?.length > 0; else emptyTransaction">
+  <ion-list-header>
+    <ion-badge color="yellow-light"><b>Transaksi Terakhir</b></ion-badge>
+  </ion-list-header>
   <div *ngFor="let item of transaction">
   <ion-card> 
     <ion-item>
