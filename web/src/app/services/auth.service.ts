@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 /* let apiUrl = "http://localhost:8000/api/"; */  
-let apiUrl = "https://dev.api-pis.eidaramata.com/api/";  
+let apiUrl = "https://yourdomain/api/";  
 
 @Injectable({
   providedIn: 'root'

@@ -72,7 +72,7 @@ export class SignupPage implements OnInit {
   get f() { return this.signUpForm.controls; }
 
   signinPage(){
-    this.router.navigate(['/signin'])
+    this.router.navigate(['/signin'], {replaceUrl: true})
   }
 
   aboutPage(){
